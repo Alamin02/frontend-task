@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 
-import { Card, Button, Modal } from 'antd';
+import { Card, Button, Modal, Icon } from 'antd';
 
 class PersonCard extends Component {
 
     state = {
-        modalOpen: false
+        modalOpen: false,
+        numberVisible: false,
+        emailVisible: false,
     }
 
     showModal = () => {
@@ -20,8 +22,21 @@ class PersonCard extends Component {
         });
     }
 
+    showNumber = () => {
+        this.setState({
+            numberVisible: true,
+        });
+    }
+
+    showEmail = () => {
+        this.setState({
+            emailVisible: true,
+        });
+    }
+
     render() {
         const { name, address, id, hash, number, email } = this.props.data;
+        const { numberVisible, emailVisible } = this.state;
 
         return (
             <div>
@@ -33,9 +48,23 @@ class PersonCard extends Component {
                     title={<p> ID: {id} <br />Hash: {hash}</p>}
                     visible={this.state.modalOpen}
                     onCancel={this.cancelModal}
+                    footer={false}
                 >
-                    <p>{number ? number : " "}</p>
-                    <p>{email ? email : " "}</p>
+                    {number ?
+                        <p><Icon type="phone" />&nbsp;
+                            <span onClick={this.showNumber}>
+                                {numberVisible ? number : "click to view"}
+                            </span>
+                        </p> : " "
+                    }
+
+                    {email ?
+                        <p><Icon type="mail" />&nbsp;
+                            <span onClick={this.showEmail}>
+                                {emailVisible ? <a href={"mailto:" + email}>{email}</a> : "click to view"}
+                            </span>
+                        </p> : " "
+                    }
                 </Modal>
             </div>
         )
