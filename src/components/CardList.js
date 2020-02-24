@@ -8,7 +8,7 @@ class CardList extends Component {
 
         return (
             <div>
-                <Row gutter={16}>
+                <Row>
 
                     {this.props.data.map((person, index) => {
                         return (

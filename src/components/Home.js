@@ -65,11 +65,11 @@ class Home extends Component {
 
                 <br />
                 <div>
-                    <Button type="danger" onClick={() => this.reloadPage()}>Reload Current Page</Button>
-                    <Button type="danger" onClick={() => this.reloadFirstPage()}>Navigate First Page</Button>
-                    <Button onClick={() => this.gotoNextPage()}>Navigate Next 4 Items</Button>
-                    <Button onClick={() => this.quickLoad()}>Quick Load More 4 Items</Button>
-                    <Button onClick={() => this.lazyLoad()}>Lazy Load More 4 Items</Button>
+                    <Button style={{ margin: "5px" }} type="danger" onClick={() => this.reloadPage()}>Reload Current Page</Button>
+                    <Button style={{ margin: "5px" }} type="danger" onClick={() => this.reloadFirstPage()}>Navigate First Page</Button>
+                    <Button style={{ margin: "5px" }} onClick={() => this.gotoNextPage()}>Navigate Next 4 Items</Button>
+                    <Button style={{ margin: "5px" }} onClick={() => this.quickLoad()}>Quick Load More 4 Items</Button>
+                    <Button style={{ margin: "5px" }} onClick={() => this.lazyLoad()}>Lazy Load More 4 Items</Button>
                 </div>
             </div>
         )

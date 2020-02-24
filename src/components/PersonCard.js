@@ -39,8 +39,12 @@ class PersonCard extends Component {
         const { numberVisible, emailVisible } = this.state;
 
         return (
-            <div>
-                <Card title={name} extra={<Button type="danger" onClick={() => this.showModal()}>More</Button>} style={{ width: 300 }}>
+            <React.Fragment>
+                <Card
+                    title={name}
+                    extra={<Button type="danger" onClick={() => this.showModal()}>More</Button>}
+                    style={{ margin: "5px" }}
+                >
                     <p>{address ? address : " "}</p>
                 </Card>
 
@@ -66,7 +70,7 @@ class PersonCard extends Component {
                         </p> : " "
                     }
                 </Modal>
-            </div>
+            </React.Fragment>
         )
     }
 }
