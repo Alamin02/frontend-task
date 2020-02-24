@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CardList from "./CardList";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Button } from "antd";
 import getData from "../backend/dummy-server";
 
