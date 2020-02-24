@@ -13,7 +13,7 @@ class CardList extends Component {
                     {this.props.data.map((person, index) => {
                         return (
                             <Col span={6} key={index}>
-                                <PersonCard name={person.name} />
+                                <PersonCard data={person} />
                             </Col>
                         )
                     })}
