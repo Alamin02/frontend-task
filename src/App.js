@@ -1,14 +1,16 @@
 import React from 'react';
 import './App.css';
-import getData from "./backend/dummy-server";
+import Home from "./components/Home";
 
-import CardList from "./components/CardList";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
-  console.log(getData({ startingIndex: 4 }));
   return (
     <div className="App">
-      <CardList />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/:index" component={Home} />
+      </Switch>
     </div>
   );
 }
