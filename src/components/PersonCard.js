@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import { Card, Button, Modal, Icon } from 'antd';
+import ModalTitle from "./ModalTitle";
 
 class PersonCard extends Component {
 
@@ -13,13 +13,15 @@ class PersonCard extends Component {
     showModal = () => {
         this.setState({
             modalOpen: true,
-        });
-    };
+        })
+    }
 
     cancelModal = (e) => {
         this.setState({
             modalOpen: false,
-        });
+            numberVisible: false,
+            emailVisible: false,
+        })
     }
 
     showNumber = () => {
@@ -31,25 +33,27 @@ class PersonCard extends Component {
     showEmail = () => {
         this.setState({
             emailVisible: true,
-        });
+        })
     }
 
     render() {
         const { name, address, id, hash, number, email } = this.props.data;
         const { numberVisible, emailVisible } = this.state;
 
+        const moreButton = <Button type="danger" onClick={this.showModal}>More</Button>
+
         return (
             <React.Fragment>
                 <Card
                     title={name}
-                    extra={<Button type="danger" onClick={() => this.showModal()}>More</Button>}
+                    extra={moreButton}
                     style={{ margin: "5px" }}
                 >
                     <p>{address ? address : " "}</p>
                 </Card>
 
                 <Modal
-                    title={<p> ID: {id} <br />Hash: {hash}</p>}
+                    title={<ModalTitle id={id} hash={hash} />}
                     visible={this.state.modalOpen}
                     onCancel={this.cancelModal}
                     footer={false}

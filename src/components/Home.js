@@ -15,44 +15,42 @@ class Home extends Component {
         this.setState({ data });
     }
 
-    getCurrentPageIndex() {
+    getCurrentPageIndex = () => {
         const { index } = this.props.match.params;
-        let startIndex = index;
+        let startIndex = parseInt(index);
         if (index === undefined) {
             startIndex = 0;
         }
-        startIndex = parseInt(startIndex);
         return startIndex;
     }
 
-    reloadPage() {
+    reloadPage = () => {
         window.location.reload();
     }
 
-    reloadFirstPage() {
+    reloadFirstPage = () => {
         this.props.history.push('/');
         window.location.reload();
     }
 
-    gotoNextPage() {
+    gotoNextPage = () => {
         const startIndex = this.getCurrentPageIndex();
         let nextIndex = startIndex + this.state.data.length;
         this.props.history.push('/' + nextIndex);
         window.location.reload();
     }
 
-    quickLoad() {
+    quickLoad = () => {
         const startIndex = this.getCurrentPageIndex();
         let nextIndex = startIndex + this.state.data.length;
         let loaded = getData({ startingIndex: nextIndex });
-        console.log(loaded);
 
         this.setState({
             data: [...this.state.data, ...loaded]
         })
     }
 
-    lazyLoad() {
+    lazyLoad = () => {
         setTimeout(() => this.quickLoad(), 2000);
     }
 
@@ -63,13 +61,12 @@ class Home extends Component {
             <div>
                 <CardList data={data} />
 
-                <br />
                 <div>
-                    <Button style={{ margin: "5px" }} type="danger" onClick={() => this.reloadPage()}>Reload Current Page</Button>
-                    <Button style={{ margin: "5px" }} type="danger" onClick={() => this.reloadFirstPage()}>Navigate First Page</Button>
-                    <Button style={{ margin: "5px" }} onClick={() => this.gotoNextPage()}>Navigate Next 4 Items</Button>
-                    <Button style={{ margin: "5px" }} onClick={() => this.quickLoad()}>Quick Load More 4 Items</Button>
-                    <Button style={{ margin: "5px" }} onClick={() => this.lazyLoad()}>Lazy Load More 4 Items</Button>
+                    <Button style={{ margin: "5px" }} type="danger" onClick={this.reloadPage}>Reload Current Page</Button>
+                    <Button style={{ margin: "5px" }} type="danger" onClick={this.reloadFirstPage}>Navigate First Page</Button>
+                    <Button style={{ margin: "5px" }} onClick={this.gotoNextPage}>Navigate Next 4 Items</Button>
+                    <Button style={{ margin: "5px" }} onClick={this.quickLoad}>Quick Load More 4 Items</Button>
+                    <Button style={{ margin: "5px" }} onClick={this.lazyLoad}>Lazy Load More 4 Items</Button>
                 </div>
             </div>
         )

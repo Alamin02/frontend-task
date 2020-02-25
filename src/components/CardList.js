@@ -19,7 +19,6 @@ class CardList extends Component {
                     })}
 
                 </Row>
-
             </div>
         );
     }
