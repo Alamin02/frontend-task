@@ -1,12 +1,11 @@
 import React from 'react';
-import './App.css';
-import Home from "./Home";
+import Home from "./home/Home";
 
 import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div style={{ margin: "15px" }}>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/:index" component={Home} />

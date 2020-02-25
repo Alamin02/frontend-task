@@ -1,26 +1,35 @@
 import React, { Component } from "react";
 import CardList from "./CardList";
 import { withRouter } from "react-router-dom";
-import { Button } from "antd";
-import getData from "../backend/dummy-server";
+import { Button, Spin } from "antd";
 
 class Home extends Component {
     state = {
-        data: []
+        data: [],
+        loading: false,
     }
 
     componentDidMount() {
-        const startIndex = this.getCurrentPageIndex();
-        let data = getData({ startingIndex: startIndex });
-        this.setState({ data });
+        this.dataFetch();
+    }
+
+    spinToggle = () => {
+        // Toggle the spinner visibility state
+        this.setState({
+            loading: !this.state.loading
+        })
     }
 
     getCurrentPageIndex = () => {
+        // Get first index from url
         const { index } = this.props.match.params;
+
+        // Convert the String into Int
         let startIndex = parseInt(index);
-        if (index === undefined) {
-            startIndex = 0;
-        }
+
+        // Handle some possible wrong inputs
+        if (index === undefined || isNaN(index)) startIndex = 0;
+
         return startIndex;
     }
 
@@ -34,32 +43,55 @@ class Home extends Component {
     }
 
     gotoNextPage = () => {
+        // Get first index for the current page
         const startIndex = this.getCurrentPageIndex();
+
+        // Index of last loaded data in the page + 1
         let nextIndex = startIndex + this.state.data.length;
+
+        // Boom! Let's go to the next
         this.props.history.push('/' + nextIndex);
         window.location.reload();
     }
 
-    quickLoad = () => {
+    dataFetch = async () => {
+        // Get first index for the current page
         const startIndex = this.getCurrentPageIndex();
-        let nextIndex = startIndex + this.state.data.length;
-        let loaded = getData({ startingIndex: nextIndex });
 
-        this.setState({
-            data: [...this.state.data, ...loaded]
-        })
+        // Index of last loaded data in the page + 1
+        let nextIndex = startIndex + this.state.data.length;
+
+        // Get the data from the server
+        await fetch('http://localhost:4000/' + nextIndex, { mode: "cors" }).then((response) => {
+            return response.json();
+        }).then((fetchedData) => {
+            // When the data is recieved, now update the state to render new data
+            this.setState({
+                data: [...this.state.data, ...fetchedData.data]
+            })
+        });
+    }
+
+    quickLoad = () => {
+        this.spinToggle();
+        this.dataFetch().then(() => this.spinToggle());
     }
 
     lazyLoad = () => {
-        setTimeout(() => this.quickLoad(), 2000);
+        this.spinToggle();
+        setTimeout(() => {
+            this.dataFetch().then(() => this.spinToggle());
+        }, 5000);
     }
 
     render() {
-        const { data } = this.state;
+        const { data, loading } = this.state;
 
         return (
             <div>
                 <CardList data={data} />
+
+                <div style={{ textAlign: "center" }}>{loading ? <Spin /> : ""}</div>
 
                 <div>
                     <Button style={{ margin: "5px" }} type="danger" onClick={this.reloadPage}>Reload Current Page</Button>

@@ -5,19 +5,18 @@ import { Col, Row } from "antd";
 
 class CardList extends Component {
     render() {
+        const cardsToRender = this.props.data.map((person, index) => {
+            return (
+                <Col span={6} key={index}>
+                    <PersonCard data={person} />
+                </Col>
+            )
+        })
 
         return (
             <div>
                 <Row>
-
-                    {this.props.data.map((person, index) => {
-                        return (
-                            <Col span={6} key={index}>
-                                <PersonCard data={person} />
-                            </Col>
-                        )
-                    })}
-
+                    {cardsToRender}
                 </Row>
             </div>
         );
